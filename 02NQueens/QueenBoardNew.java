@@ -35,7 +35,7 @@ public class QueenBoardNew{
      *all n queens. Uses solveH
      */
     public void solve(){
-`	return solveH(0);
+	return solveH(0);
     }
     
     private boolean solveH(int col){

@@ -1,9 +1,9 @@
-public class QueenBoard{
+public class QueenBoardNew{
 
     private int[][]board;
     private int solutionCount;
 
-    public QueenBoard(int size){
+    public QueenBoardNew(int size){
 	board = new int[size][size];
 	for (int i = 0; i < board.length; i ++){
 	    for(int j = 0; j < board[i].length; j ++){
@@ -34,16 +34,14 @@ public class QueenBoard{
      *final configuration of the board after adding 
      *all n queens. Uses solveH
      */
-    public boolean solve(){
-	if (board.length == 2 || board.length == 3){
-	    return false;
-	}
-	else{
-	    return solveH(0);
-	}
+    public void solve(){
+`	return solveH(0);
     }
     
     private boolean solveH(int col){
+	if (board.length == 2 || board.length == 3){
+	    return false;
+	}
 	if (col == board.length){
 	    int x = 0;
 	    for (int i = 0; i < board.length; i ++){
@@ -60,6 +58,7 @@ public class QueenBoard{
      *@return the number of solutions found, or -1 if the board was never solved.
      *The board should be reset after this is run.    
      */
+
     public int getSolutionCount(){
     	return -1;
     }
@@ -71,4 +70,3 @@ public class QueenBoard{
     	return "";
     }
 }
-
