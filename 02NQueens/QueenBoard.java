@@ -128,7 +128,7 @@ public class QueenBoard{
     }
 
     public static void main(String[] args) {
-       	QueenBoard test = new QueenBoard(8);
+       	QueenBoard test = new QueenBoard(3);
 	test.solve();
 	System.out.println(test);
 	QueenBoard test2 = new QueenBoard(8);
