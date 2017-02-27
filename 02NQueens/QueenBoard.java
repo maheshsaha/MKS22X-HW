@@ -128,12 +128,6 @@ public class QueenBoard{
     }
 
     public static void main(String[] args) {
-       	QueenBoard test = new QueenBoard(3);
-	test.solve();
-	System.out.println(test);
-	QueenBoard test2 = new QueenBoard(8);
-	test2.countSolutions();
-	System.out.println(test2.getSolutionCount());
     }
 }
 
