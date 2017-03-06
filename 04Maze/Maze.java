@@ -6,40 +6,72 @@ public class Maze{
 
     private char[][]maze;
     private boolean animate;
+    private boolean start, end;
+    private int startR, startC, endR, endC;
 
-    /*Constructor loads a maze text file, and sets animate to false by default.
-      1. The file contains a rectangular ascii maze, made with the following 4 characters:
-      '#' - locations that cannot be moved onto
-      ' ' - locations that can be moved onto
-      'E' - the location of the goal (exactly 1 per file)
-      'S' - the location of the start(exactly 1 per file)
-
-      2. The maze has a border of '#' around the edges. So you don't have to check for out of bounds!
-      3. When the file is not found OR there is no E or S then: print an error and exit the program.
-    */
-    public Maze(String filename, boolean ani){
+    public Maze(String filename){
 	animate = false;
 	try{
-	    Scanner inf = new Scanner(new File(filename));
+	    File name = new File(filename);
+	    Scanner inf = new Scanner(name);
+
+	    int rows = 0;
+	    int cols = 0;
+	    
+	    while(inf.hasNextLine()){
+		rows++;
+		cols = inf.nextLine().length();
+	    }
+	    maze = new char[rows][cols];
+
+	    int line = 0;
+	    while(inf.hasNext()){
+		String lines = inf.nextLine();
+
+		int i = 0;
+		while (i < lines.length()){
+		    maze[line][i] = lines.charAt(i);
+		    if(lines.charAt(i) == 'S') {
+			start = true;
+			startR = line;
+			startC = i;
+		    }
+		    if(lines.charAt(i) == 'E'){
+			end = true;
+			endR = line;
+			endC = i;
+		    }
+		    i++;
+		}
+		line++;
+	    }
+	    System.out.println(startR + "," + startC);
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found");
 	    System.exit(0);
 	}
-	Scanner inf = new Scanner(new File(filename));
-	int lineNumber = 1;
-	while(inf.hasNextLine()){
-            String line = inf.nextLine();
-            System.out.println(line);
-        }       
+	if (start == false || end == false){
+	    System.out.println("Missing start or end");
+	    System.exit(0);
+	}
     }    
 
+    private void wait(int millis){
+	try {
+	    Thread.sleep(millis);
+	}
+	catch (InterruptedException e) {
+	}
+    }
+    
     public void setAnimate(boolean b){
         animate = b;
     }
 
     public void clearTerminal(){
-        System.out.println("\033[2J");
+        //erase terminal, go to top left of screen.
+        System.out.println("\033[2J\033[1;1H");
     }
 
 
@@ -47,10 +79,8 @@ public class Maze{
       Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
     */
     public boolean solve(){
-            int startx=0,starty=0;
-            //Initialize startx and starty with the location of the S. 
-            maze[startx][starty] = ' ';//erase the S, and start solving!
-            return solve(startx,starty);
+	maze[startR][startC] = ' ';//erase the S, and start solving!
+	return solve(startR,startC);
     }
 
     /*
@@ -66,14 +96,36 @@ public class Maze{
         All visited spots that were not part of the solution are changed to '.'
         All visited spots that are part of the solution are changed to '@'
     */
-    private boolean solve(int x, int y){
+    private boolean solve(int row, int col){
         if(animate){
-            System.out.println(this);
+            System.out.println("\033[2J\033[1;1H"+this);
             wait(20);
         }
-	
-        //COMPLETE SOLVE
+	if (maze[row][col] == 'E')
+	    return true;
+	if (maze[row][col] == ' '){
+	    maze[row][col] = '@';
+	    if (solve(row, col + 1) ||
+		solve(row, col - 1) ||
+		solve(row + 1, col) ||
+		solve(row - 1, col)) {
+		return true;
+	    }else{
+		maze[row][col] = '.';
+	    }
+	}
+	//COMPLETE SOLVE
         return false; //so it compiles
     }
-
+    public String toString(){
+	String s = "";
+	for(int i = 0; i < maze.length; i++){
+	    for(int j = 0; j < maze[i].length; j++){
+		s += maze[i][j];
+	    }
+	    s += "\n";
+	}
+	return s;
+    }
 }
+
