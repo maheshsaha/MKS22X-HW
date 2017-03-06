@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-import java.*;
 
 public class Maze{
 
@@ -9,7 +8,7 @@ public class Maze{
     private boolean start, end;
     private int startR, startC, endR, endC;
 
-    public Maze(String filename){
+    public Maze(String filename){ //ty Alan for help
 	animate = false;
 	try{
 	    File name = new File(filename);
@@ -22,14 +21,15 @@ public class Maze{
 		rows++;
 		cols = inf.nextLine().length();
 	    }
+	    
 	    maze = new char[rows][cols];
 
 	    int line = 0;
+	    inf = new Scanner(name);
 	    while(inf.hasNext()){
 		String lines = inf.nextLine();
 
-		int i = 0;
-		while (i < lines.length()){
+		for(int i = 0; i < lines.length(); i ++){
 		    maze[line][i] = lines.charAt(i);
 		    if(lines.charAt(i) == 'S') {
 			start = true;
@@ -41,20 +41,19 @@ public class Maze{
 			endR = line;
 			endC = i;
 		    }
-		    i++;
 		}
 		line++;
 	    }
-	    System.out.println(startR + "," + startC);
+	    if (start == false || end == false){
+		System.out.println("Missing start or end");
+		System.exit(0);
+	    }
 	}
 	catch (FileNotFoundException e){
 	    System.out.println("File not found");
 	    System.exit(0);
 	}
-	if (start == false || end == false){
-	    System.out.println("Missing start or end");
-	    System.exit(0);
-	}
+	
     }    
 
     private void wait(int millis){
@@ -75,27 +74,12 @@ public class Maze{
     }
 
 
-    /*Wrapper Solve Function
-      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
-    */
     public boolean solve(){
 	maze[startR][startC] = ' ';//erase the S, and start solving!
 	return solve(startR,startC);
     }
 
-    /*
-      Recursive Solve function:
-
-      A solved maze has a path marked with '@' from S to E.
-
-      Returns true when the maze is solved,
-      Returns false when the maze has no solution.
-
-      Postcondition:
-        The S is replaced with '@' but the 'E' is not.
-        All visited spots that were not part of the solution are changed to '.'
-        All visited spots that are part of the solution are changed to '@'
-    */
+    
     private boolean solve(int row, int col){
         if(animate){
             System.out.println("\033[2J\033[1;1H"+this);
@@ -117,6 +101,7 @@ public class Maze{
 	//COMPLETE SOLVE
         return false; //so it compiles
     }
+    
     public String toString(){
 	String s = "";
 	for(int i = 0; i < maze.length; i++){
