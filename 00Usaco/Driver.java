@@ -1,7 +1,7 @@
 public class Driver{
     public static void main(String[]args){
-	LakeMaking g = new LakeMaking("data1.dat");
-	g.depthAnalyze();
+        USACO g = new USACO();
+	g.bronze("data1.dat");
 	//	System.out.println(g.blah());
 	System.out.println(g.volumeCalc());
     }
