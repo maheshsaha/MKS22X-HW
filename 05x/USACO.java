@@ -102,6 +102,7 @@ public class USACO{
     }
 
     public int volumeCalc(){
+	depthAnalyze();
 	int sum = 0;
 	for(int i = 0; i < land.length; i++){
 	    for(int j = 0; j < land[i].length; j++){
