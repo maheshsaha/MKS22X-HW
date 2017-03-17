@@ -1,56 +1,49 @@
+import java.util.*;
+
 public class Quick {
 
-    public static int part ( int [] data){
-	int randomInd = (int)(Math.random() * data.length);
+    public static void swap (int [] data, int i, int j){
+	int temp = data[i];
+	data[i] = data[j];
+	data[j] = temp;
+    }
+    
+    public static int part (int [] data, int start, int end){
+	if (start == end)
+	    return start;
+	
+	int randomInd = (int)(Math.random() * (end - start + 1)) + start;
 	int val = data[randomInd];
-	System.out.println(data[randomInd]);
-	System.out.println(toArray(data));
 
-	int lessThan = 0;
+	//	System.out.println(data[randomInd]);
 
-	for (int i = 0; i < randomInd; i ++){
-	    if (data[i] < data[randomInd])
-		lessThan += 1;
-	}
-	for (int j = randomInd+1; j < data.length; j++){
-	    if (data[j] < data[randomInd])
-		lessThan += 1;
-	}
-
-	int tempi = data[lessThan];
-	data[lessThan] = data[randomInd];
-	data[randomInd] = tempi;
+	swap(data,randomInd,start);
 	
+	//	System.out.println(Arrays.toString(data));	
+
+	int pivPos = start;
 	
-	for(int i = 0; i < lessThan; i++){
-	    if(data[i] > data[lessThan]){
-		int temp = data[i];
-		data[i] = data[lessThan + i + 1];
-		data[lessThan + i + 1] = temp; 
+	for (int i = start + 1; i <= end; i ++){
+	    if (data[i] <= val){
+		if (i - pivPos == 1){
+		    swap(data,i,pivPos);
+		    pivPos += 1;
+		}
+		else{
+		    swap(data,pivPos + 1, pivPos);
+		    swap(data,pivPos,i);
+		    pivPos += 1;
+		}
 	    }
 	}
-	return lessThan;
+	return pivPos;		    
     }
 
-    public static String toArray(int[]data){
-	String s = "";
-	    for (int i = 0; i < data.length; i ++){
-		s += data[i] + ", ";
-	    }
-
-	return s; 
-    }
-
-    public static void main(String[]args){
-	int[]blah = {999,999,999,4,1,0,3,2,999,999,999};
-	System.out.println(part(blah));
-    }
-
+   
     
-    
-    
-	//-Choose a random element to be a pivot, and partition the array around it. 
-	//-Only partition the elements from start to end inclusive.
-	//-When done returns the index of the final position of the pivot element.      
-	//    (Should be from start to end inclusive)
+    public static void main(String[] args){
+	int[] data = {999,999,999,4,1,0,3,2,999,999,999};
+	System.out.println(part(data, 0, 11));
+	System.out.println(Arrays.toString(data));
     }
+}
