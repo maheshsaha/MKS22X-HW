@@ -38,12 +38,40 @@ public class Quick {
 	}
 	return pivPos;		    
     }
-
-   
+    
+    public static int quickselect(int []data, int k){
+	int kPos = part(data,0,data.length-1);
+	if (kPos!=0){
+	    for (int i = 0; i < kPos; i ++){
+		kPos = part(data,i,kPos-i);
+		if (k == kPos)
+		    return data[kPos];
+	    }
+	    for (int j = kPos + 1; j < data.length; j++){
+		kPos = part(data,j,data.length-j);
+		if (k == kPos)
+		    return data[kPos];
+	    }
+	}
+	return data[kPos];
+    }
+	    
+	//return the value that is the kth smallest value of the array. 
+	//use your partition method to help you accomplish this.
+    
+    
+    
     
     public static void main(String[] args){
-	int[] data = {999,999,999,4,1,0,3,2,999,999,999};
+	int[] data = {9,8,7,4,4,10,1,2,55,12,0,2};
 	System.out.println(part(data, 0, 11));
 	System.out.println(Arrays.toString(data));
+	int[]ary = { 2, 10, 15, 23, 0,  5};
+	System.out.println(quickselect( ary , 0 ));// would return 0
+	System.out.println(quickselect( ary , 1 ));//  would return 2
+	System.out.println(quickselect( ary , 2 ));//  would return 5
+	System.out.println(quickselect( ary , 3 ));//  would return 10
+	System.out.println(quickselect( ary , 4 ));//  would return 15
+	System.out.println(quickselect( ary , 5 ));//  would return 23
     }
 }
