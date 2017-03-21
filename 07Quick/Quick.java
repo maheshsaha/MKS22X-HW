@@ -17,41 +17,38 @@ public class Quick {
 
 	//	System.out.println(data[randomInd]);
 
-	swap(data,randomInd,start);
+	swap(data,randomInd,end);
 	
 	//	System.out.println(Arrays.toString(data));	
 
 	int pivPos = start;
 	
-	for (int i = start + 1; i <= end; i ++){
-	    if (data[i] <= val){
-		if (i - pivPos == 1){
-		    swap(data,i,pivPos);
-		    pivPos += 1;
-		}
-		else{
-		    swap(data,pivPos + 1, pivPos);
-		    swap(data,pivPos,i);
-		    pivPos += 1;
-		}
+	for (int i = start; i < end; i ++){
+	    if (data[i] < data[end]){
+		swap(data,pivPos,i);
+		pivPos += 1;
 	    }
 	}
+	swap(data,pivPos,end);
 	return pivPos;		    
     }
     
     public static int quickselect(int []data, int k){
-	int kPos = part(data,0,data.length-1);
-	if (kPos!=0){
-	    for (int i = 0; i < kPos; i ++){
-		kPos = part(data,i,kPos-i);
-		if (k == kPos)
-		    return data[kPos];
+
+	int start = 0;
+	int end = data.length-1;
+	int kPos = 0;
+	
+	while(true){
+	    kPos = part(data,start,end);
+	    if (k != kPos){
+		if(k < kPos)
+		    end = kPos;
+		else
+		    start = kPos;
 	    }
-	    for (int j = kPos + 1; j < data.length; j++){
-		kPos = part(data,j,data.length-j);
-		if (k == kPos)
-		    return data[kPos];
-	    }
+	    else
+		break;
 	}
 	return data[kPos];
     }
@@ -66,12 +63,12 @@ public class Quick {
 	int[] data = {1,1,1,1,1,2,3,4,5,7,8,8};
 	System.out.println(part(data, 0, 11));
 	System.out.println(Arrays.toString(data));
-	// int[]ary = { 2, 10, 15, 23, 0,  5};
-	// System.out.println(quickselect( ary , 0 ));// would return 0
-	// System.out.println(quickselect( ary , 1 ));//  would return 2
-	// System.out.println(quickselect( ary , 2 ));//  would return 5
-	// System.out.println(quickselect( ary , 3 ));//  would return 10
-	// System.out.println(quickselect( ary , 4 ));//  would return 15
-	// System.out.println(quickselect( ary , 5 ));//  would return 23
+	int[]ary = { 2, 10, 15, 23, 0,  5};
+	System.out.println(quickselect( ary , 0 ));// would return 0
+	System.out.println(quickselect( ary , 1 ));//  would return 2
+	System.out.println(quickselect( ary , 2 ));//  would return 5
+	System.out.println(quickselect( ary , 3 ));//  would return 10
+	System.out.println(quickselect( ary , 4 ));//  would return 15
+	System.out.println(quickselect( ary , 5 ));//  would return 23
     }
 }
