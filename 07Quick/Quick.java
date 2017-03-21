@@ -13,24 +13,29 @@ public class Quick {
 	    return start;
 	
 	int randomInd = (int)(Math.random() * (end - start + 1)) + start;
-	int val = data[randomInd];
+	System.out.println(randomInd);
+	swap(data,randomInd,start);
 
-	//	System.out.println(data[randomInd]);
+	int gt = end;
+	int lt = start;
+	int i = start + 1;
+	int val = data[lt];
 
-	swap(data,randomInd,end);
-	
-	//	System.out.println(Arrays.toString(data));	
-
-	int pivPos = start;
-	
-	for (int i = start; i < end; i ++){
-	    if (data[i] < data[end]){
-		swap(data,pivPos,i);
-		pivPos += 1;
+	while(i <= gt){
+	    if(data[i] == val){
+		i++;
+	    }
+	    else if(data[i] < val){
+		swap(data,i,lt);
+		i++;
+		lt++;
+	    }
+	    else{
+		swap(data,gt,i);
+		gt--;
 	    }
 	}
-	swap(data,pivPos,end);
-	return pivPos;		    
+	return lt;		    
     }
     
     public static int quickselect(int []data, int k){
@@ -52,23 +57,20 @@ public class Quick {
 	}
 	return data[kPos];
     }
-	    
-	//return the value that is the kth smallest value of the array. 
-	//use your partition method to help you accomplish this.
     
-    
-    
-    
+    public static void quicksort(int[]data){
+    }
+
     public static void main(String[] args){
-	int[] data = {1,1,1,1,1,2,3,4,5,7,8,8};
-	System.out.println(part(data, 0, 11));
+	int[] data = {1,1,1,2,5,0};
+	System.out.println(part(data, 0, 5));
 	System.out.println(Arrays.toString(data));
-	int[]ary = { 2, 10, 15, 23, 0,  5};
-	System.out.println(quickselect( ary , 0 ));// would return 0
-	System.out.println(quickselect( ary , 1 ));//  would return 2
-	System.out.println(quickselect( ary , 2 ));//  would return 5
-	System.out.println(quickselect( ary , 3 ));//  would return 10
-	System.out.println(quickselect( ary , 4 ));//  would return 15
-	System.out.println(quickselect( ary , 5 ));//  would return 23
+	// int[]ary = { 2, 10, 15, 23, 0,  5};
+	// System.out.println(quickselect( ary , 0 ));// would return 0
+	// System.out.println(quickselect( ary , 1 ));//  would return 2
+	// System.out.println(quickselect( ary , 2 ));//  would return 5
+	// System.out.println(quickselect( ary , 3 ));//  would return 10
+	// System.out.println(quickselect( ary , 4 ));//  would return 15
+	// System.out.println(quickselect( ary , 5 ));//  would return 23
     }
 }
