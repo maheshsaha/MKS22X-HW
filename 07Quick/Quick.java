@@ -94,9 +94,7 @@ public class Quick {
 	    quicksortH(data, start, lt - 1);
 	}
     }
-    
-    
-    
+
     public static void main(String[] args){
     }
 }
