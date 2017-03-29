@@ -23,18 +23,23 @@ public class MyLinkedList {
 	size = 0;
     }
     
-    public boolean add (int value) {
-	LNode i = new LNode(value, start);
+    public boolean add (int value){ //adds to start
+       	LNode i = new LNode(value, start);
         start = i;
 	size ++;
 	return true;
     }
-    
+
+       
     public int size(){
 	return size;
     }
     
     public int get(int index){
+	if (index < 0 || index >= size()){
+	    throw new IndexOutOfBoundsException();
+	}
+	
 	LNode current = start;
 	for (int i = 0; i < size; i ++){
 	    if (i == index){
@@ -47,6 +52,10 @@ public class MyLinkedList {
     }
     
     public int set(int index, int newValue){
+	if(index < 0 || index >= size()){
+	    throw new IndexOutOfBoundsException();
+	}
+	    
 	LNode current = start;
 	int oVal = get(index);
 	for (int i = 0; i < index + 1; i ++){
@@ -73,8 +82,32 @@ public class MyLinkedList {
 	i += (current.value + "]");
 	return i;
     }
-    
+
+    public int indexOf(int value){
+	LNode current = start;
+	for (int i = 0; i < size; i ++){
+	    if (current.value == value){
+		return i;
+	    }
+	    else
+		current = current.next;
+	}
+	return -1;
+    }
     
     public static void main(String[] args){
+	MyLinkedList x = new MyLinkedList();
+	x.add(1);
+	x.add(2);
+	x.add(3);
+	x.add(4);
+	x.add(5);
+
+	System.out.println(x);
+	System.out.println(x.set(0,3));
+	System.out.println(x);
+	System.out.println("size = " + x.size());
+	System.out.println(x.indexOf(7));
+
     }
 }
