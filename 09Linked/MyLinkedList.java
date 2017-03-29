@@ -1,44 +1,80 @@
 public class MyLinkedList {
-    LNode start;
-    int size;
 
-    public LinkedList(){
-	LinkedList x = new LinkedList();
-    }
-   
-    public String toString(){
-	String i = "[";
-	for (int x = 0; x < size-1; x++){
-	    i += get(x) + ", ";
+    public class LNode {
+	private int value;
+	private LNode next;
+	
+	public LNode(int val){
+	    value = val;
+	    next = null;
 	}
-	i += get(size-1) + "]";
+	
+	public LNode(int val, LNode node){
+	    value = val;
+	    next = node;
+	}
     }
+    
+    private LNode start;
+    private int size;
 
+    public MyLinkedList(){
+	start = null;
+	size = 0;
+    }
+    
+    public boolean add (int value) {
+	LNode i = new LNode(value, start);
+        start = i;
+	size ++;
+	return true;
+    }
+    
+    public int size(){
+	return size;
+    }
+    
+    public int get(int index){
+	LNode current = start;
+	for (int i = 0; i < size; i ++){
+	    if (i == index){
+		return current.value;
+	    }
+	    else
+		current = current.next;
+	}
+	return -1;
+    }
+    
+    public int set(int index, int newValue){
+	LNode current = start;
+	int oVal = get(index);
+	for (int i = 0; i < index + 1; i ++){
+	    if (i == index){
+		current.value = newValue;
+	    }
+	    else{
+		current = current.next;
+	    }
+	}
+	return oVal;
+    }
+    
+    public String toString(){
+	if (size == 0){
+	    return "[]";
+	}
+	String i = "[";
+	LNode current = start;
+	for (int x = 0; x < size-1; x++){
+	    i += current.value + ", ";
+	    current = current.next;
+	}
+	i += (current.value + "]");
+	return i;
+    }
+    
+    
+    public static void main(String[] args){
+    }
 }
-
-public class LNode {
-    /* Phase I:
-       boolean add(int value) 
-       - adds the value to end (try adding to the front first, for testing purposes)
-       int size() 
-       - return the number of elements in the list
-       toString() 
-       - returns a string representation of the list of n elements formatted like: 
-       [ v0, v1, v2, v3, ... vn-1, ] 
-       An empty list is just []
-       int get(int index) 
-       - return the value of the element at the specified index (0 based)
-       int set(int index,int newValue)
-       - change the value of the element at the specified index to the newValue, return the old value  
-       
-       Phase II:
-       int indexOf(int value) 
-       - returns the index of the 1st occurrence of the value in the linked list, -1 if not found.
-       boolean add(int index, int value)    
-       - insert a new element at the specified index, 0 at the front, size() at the end. 
-       int remove(int index) 
-       - remove the element at the specified index, returns the value removed
-       
-       ALSO: 
-       -Any exceptions that the actual LinkedList contains:  get,set,add,remove
-    */
