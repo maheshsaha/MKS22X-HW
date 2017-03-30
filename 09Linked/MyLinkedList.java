@@ -26,16 +26,19 @@ public class MyLinkedList {
     }
     
     public boolean add (int value){ //adds to end now!
-	if (start == null)
+	if (start == null){
 	    start = new LNode(value);
+	    end = new LNode(value);
+	}
 	else{
+	    // end = new LNode(value, end);
 	    LNode current = start;
 	    for (int i = 0; i < size(); i ++){
-		if (current.next == null){
-		    current.next = new LNode(value);
-		    end = new LNode(value);
-		}
-		current = current.next;
+	    	if (current.next == null){
+	    	    current.next = new LNode(value);
+	    	    end = new LNode(value);
+	    	}
+	    	current = current.next;
 	    }
 	}
 	size ++;
@@ -48,7 +51,7 @@ public class MyLinkedList {
 	if(index < 0 || index > size()){
 	    throw new IndexOutOfBoundsException();
 	}
-	else if (index == size()){
+        if (index == size()){
 	    for (int i = 0; i < size(); i ++){
 		if (current.next == null){
 		    current.next = new LNode(value);
@@ -57,7 +60,7 @@ public class MyLinkedList {
 		current = current.next;
 	    }
 	}
-	else if (index == 0){
+	if (index == 0){
 	    start = new LNode(value, start);
 	}
 
@@ -69,8 +72,9 @@ public class MyLinkedList {
 		}
 		current = current.next;
 	    }
-	    current = new LNode(temp,null);
+	    current = new LNode(temp);
 	    end = new LNode(temp,null);
+	    // System.out.println(temp);
 	}
 	size ++;
     }
@@ -120,7 +124,7 @@ public class MyLinkedList {
 	}
 	String i = "[";
 	LNode current = start;
-	for (int x = 0; x < size-1; x++){
+	while(current.next != null){
 	    i += current.value + ", ";
 	    current = current.next;
 	}
@@ -130,12 +134,15 @@ public class MyLinkedList {
 
     public int indexOf(int value){
 	LNode current = start;
-	for (int i = 0; i < size; i ++){
+	int i= 0;
+	while(current != null){
 	    if (current.value == value){
 		return i;
 	    }
-	    else
+	    else{
 		current = current.next;
+		i++;
+	    }
 	}
 	return -1;
     }
@@ -146,13 +153,13 @@ public class MyLinkedList {
 	x.add(2);
 	x.add(3);
 	x.add(4);
-	x.add(5);
-	x.add(4,6);
-	System.out.println(x);
+	x.add(6);
+	x.add(4,5);
+	System.out.println(x.get(4));
 	System.out.println(x.set(0,3));
 	System.out.println(x);
 	System.out.println("size = " + x.size());
-	System.out.println(x.indexOf(7));
-
+	System.out.println(x.indexOf(5));
+    
     }
 }
