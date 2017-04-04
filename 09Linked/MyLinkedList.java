@@ -84,12 +84,12 @@ public class MyLinkedList {
     	    throw new IndexOutOfBoundsException();
     	}
 
-	if(size() == 1){
+	else if(size() == 1){
 	    start = null;
 	    end = null;
 	}
 
-        if (index == size()-1){
+        else if (index == size()-1){
     	    for (int i = 0; i < size(); i ++){
     		if (i == index - 1){
     		    current.next = null;
@@ -100,7 +100,7 @@ public class MyLinkedList {
     	    }
     	}
 
-    	if (index == 0){
+    	else if (index == 0){
     	    start = start.next;
     	}
 
@@ -201,6 +201,12 @@ public class MyLinkedList {
 	System.out.println(x.remove(1));
 	System.out.println(x);
 	System.out.println(x.remove(3));
+	System.out.println(x);
+	System.out.println(x.remove(0));
+	System.out.println(x);
+	System.out.println(x.remove(0));
+	System.out.println(x);
+	System.out.println(x.remove(0));
 	System.out.println(x);
     }
 }
