@@ -6,7 +6,6 @@ public class MyLinkedList {
 	
 	public LNode(int val){
 	    value = val;
-	    next = null;
 	}
 	
 	public LNode(int val, LNode node){
@@ -20,8 +19,6 @@ public class MyLinkedList {
     private int size;
 
     public MyLinkedList(){
-	start = null;
-	end = null;
 	size = 0;
     }
     
@@ -65,21 +62,63 @@ public class MyLinkedList {
 	}
 
 	else{
-	    int temp = set(index, value);
-	    for(int j = 0; j < size(); j ++){
-		if (j >= index + 1){
-		    temp = set(j, temp);
+	    LNode node = start;
+	    int i = 0;
+	    while (node != null){
+		if (i == index-1){
+		    LNode temp = node.next;
+		    node.next = new LNode(value);
+		    node.next.next = temp;
 		}
-		current = current.next;
+		else node = node.next;
+		i ++;
 	    }
-	    current = new LNode(temp);
-	    end = new LNode(temp,null);
-	    // System.out.println(temp);
 	}
 	size ++;
     }
     
-       
+    public int remove(int index){
+	int val = get(index);
+    	LNode current = start;
+    	if(index < 0 || index >= size()){
+    	    throw new IndexOutOfBoundsException();
+    	}
+
+	if(size() == 1){
+	    start = null;
+	    end = null;
+	}
+
+        if (index == size()-1){
+    	    for (int i = 0; i < size(); i ++){
+    		if (i == index - 1){
+    		    current.next = null;
+    		    end = current;
+		    break;
+    		}
+    		current = current.next;
+    	    }
+    	}
+
+    	if (index == 0){
+    	    start = start.next;
+    	}
+
+    	else{
+    	    LNode node = start;
+	    int i = 0;
+	    while (node.next != null){
+		if (i == index-1){
+		    node.next = node.next.next;
+		    break;
+		}
+		else node = node.next;
+		i ++;
+	    }
+	}
+	size --;
+	return val;
+    }
     public int size(){
 	return size;
     }
@@ -155,11 +194,13 @@ public class MyLinkedList {
 	x.add(4);
 	x.add(6);
 	x.add(4,5);
-	System.out.println(x.get(4));
-	System.out.println(x.set(0,3));
 	System.out.println(x);
 	System.out.println("size = " + x.size());
-	System.out.println(x.indexOf(5));
-    
+	System.out.println(x.remove(0));
+	System.out.println(x);
+	System.out.println(x.remove(1));
+	System.out.println(x);
+	System.out.println(x.remove(3));
+	System.out.println(x);
     }
 }
