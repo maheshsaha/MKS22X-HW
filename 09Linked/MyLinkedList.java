@@ -1,44 +1,63 @@
 public class MyLinkedList {
 
-    public class LNode {
-	private int value;
-	private LNode next;
+    private class LNode {
+        int value;
+	LNode next,prev;
 	
 	public LNode(int val){
 	    value = val;
 	}
 	
+	public String toString(){
+	    String x = "";
+	    // if(prev.value != null && next.value != null){
+	    // 	x += "(" + prev.value + ") " + value + " (" + next.value + ")";
+	    // }
+	    // else if (prev.value != null){
+	    // 	x += "(null) " + value + " (" + next.value + ")";
+	    // }
+	    // else{
+	    //    	x += "(null) " + value + " (null)";
+	    // }
+	    return value + "";
+	}
+
 	public LNode(int val, LNode node){
 	    value = val;
 	    next = node;
 	}
     }
     
-    private LNode start;
-    private LNode end;
-    private int size;
+    LNode start;
+    LNode end;
+    int size;
 
     public MyLinkedList(){
-	size = 0;
     }
-    
-    public boolean add (int value){ //adds to end now!
-	if (start == null){
-	    start = new LNode(value);
-	    end = new LNode(value);
+
+    public int size(){
+	return size;
+    }
+
+    private LNode getNthNode(int n){
+	if(n < 0 || n > size()-1){
+	    throw new IndexOutOfBoundsException();
 	}
-	else{
-	    // end = new LNode(value, end);
-	    LNode current = start;
-	    for (int i = 0; i < size(); i ++){
-	    	if (current.next == null){
-	    	    current.next = new LNode(value);
-	    	    end = new LNode(value);
-	    	}
-	    	current = current.next;
+	LNode current = start;
+	int i = 0;
+	while (current != null){
+	    if (i == n)
+		break;
+	    else{
+		current = current.next;
+		i++;
 	    }
 	}
-	size ++;
+	return current;
+    }
+
+    public boolean add(int value){ 
+	add(size,value);
 	return true;
     }
 
@@ -48,7 +67,7 @@ public class MyLinkedList {
 	if(index < 0 || index > size()){
 	    throw new IndexOutOfBoundsException();
 	}
-        if (index == size()){
+        else if (index == size() && index != 0){
 	    for (int i = 0; i < size(); i ++){
 		if (current.next == null){
 		    current.next = new LNode(value);
@@ -57,7 +76,7 @@ public class MyLinkedList {
 		current = current.next;
 	    }
 	}
-	if (index == 0){
+	else if (index == 0){
 	    start = new LNode(value, start);
 	}
 
@@ -119,9 +138,7 @@ public class MyLinkedList {
 	size --;
 	return val;
     }
-    public int size(){
-	return size;
-    }
+
     
     public int get(int index){
 	if (index < 0 || index >= size()){
@@ -194,7 +211,7 @@ public class MyLinkedList {
 	x.add(4);
 	x.add(6);
 	x.add(4,5);
-	System.out.println(x);
+	System.out.println(x.getNthNode(5));
 	System.out.println("size = " + x.size());
 	System.out.println(x.remove(0));
 	System.out.println(x);
