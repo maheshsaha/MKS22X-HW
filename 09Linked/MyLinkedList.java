@@ -55,6 +55,30 @@ public class MyLinkedList {
 	}
 	return current;
     }
+    
+    private void addAfter(LNode location, LNode toBeAdded){
+	LNode current = start;
+	int i = 0;
+	while (current != location){
+	    current = current.next;
+	    i ++;
+	}
+	if (current != location && i == 0){
+	    throw new IllegalArgumentException();
+	}
+	add(i, toBeAdded.value);
+    }
+    
+
+    private int remove(LNode target){
+	LNode current = start;
+	int i = 0;
+	while (current != target){
+	    current = current.next;
+	    i ++;
+	}
+	return remove(i);
+    }
 
     public boolean add(int value){ 
 	add(size,value);
