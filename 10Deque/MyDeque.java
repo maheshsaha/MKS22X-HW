@@ -1,6 +1,11 @@
 public class MyDeque{
-    private int front, back;
+    String[] ary;
+    int size, front, back;
 
+    public MyDeque(){
+	ary = new String[10];
+    }
+    
     public void addFirst(String i){
     }
     
@@ -10,4 +15,12 @@ public class MyDeque{
     public String removeFirst(){
     }
 
+    public String removeLast(){
+    }
+
+    public String getFirst(){
+    }
+
+    public String getLast(){
+    }
 }
