@@ -1,10 +1,10 @@
 import java.util.*;
 
-public class PostFix {
+public class StackCalc{
 
     public static double eval(String s){
         String[] tokens = s.split(" ");
-	Stack<String> nums = new Stack<>();
+	Stack<String> nums = new Stack<String>();
         for(String token : tokens) {
             if(isOp(token)){
 		nums.push(apply(token, nums.pop(), nums.pop()));
@@ -37,6 +37,5 @@ public class PostFix {
     }
 
     public static void main(String[] args){
-        System.out.println(eval("1.0 1.0 + 5.3 * 12 - 3 %"));
     }
 }
