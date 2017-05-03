@@ -15,12 +15,12 @@ public class MyDeque{
 	if(size == ary.length){
 	    resize();
 	}
-	else{
+	if(size != 0){
 	    front --;
 	    if (front < 0)
 		front = ary.length - 1;
-	    ary[front] = i;
 	}
+	ary[front] = i;
 	size ++;
     }
     
@@ -31,12 +31,12 @@ public class MyDeque{
 	if(size == ary.length){
 	    resize();
 	}
-	else{
+	if (size != 0){
 	    back ++;
-	    if(back == ary.length)
+	    if(back >= ary.length)
 		back = 0;
-	    ary[back] = i;
 	}
+	ary[back] = i;
 	size ++;
     }
     
@@ -46,7 +46,7 @@ public class MyDeque{
 	}
 	String i = ary[front];
 	front ++;
-	if (front == ary.length){
+	if (front >= ary.length){
 	    front = 0;
 	}
 	size --;
@@ -81,36 +81,34 @@ public class MyDeque{
     }
 
     private void resize(){
-	String[] temp = new String[ary.length*2];
-	int i = 0;
-	int f = front;
-	while (i < ary.length){
-	    if(f == ary.length){
-		f = 0;
-	    }
-	    temp[i] = ary[f];
-	    f ++;
-	    i ++;
-	}
-	front = 0;
-	back = ary.length-1;
-	ary = temp;
+    	String[] temp = new String[ary.length*2];
+    	int i = 0;
+    	int f = front;
+    	while (f < front + size){
+    	    temp[i] = ary[f % ary.length];
+    	    i++;
+    	    f++;
+    	}
+    	front = 0;
+    	back = size-1;
+    	ary = temp;
     }
 
     public String toString(){
-	String blah = "";
-	int f = front;
-	for(int i = 0; i < size; i++){
-	    if(f == ary.length){
-		f = 0; 
-	    }
-	    blah += ary[f] + ", ";
-	    f++;
-	}
-	
-	return blah; 	
+    	String blah = "[";
+    	int f = front;
+    	for(int i = 0; i < size; i++){
+    	    if(f == ary.length){
+    		f = 0; 
+    	    }
+    	    blah += ary[f] + ", ";
+    	    f++;
+    	}
+	if (size != 0)
+	    blah = blah.substring(0, blah.length() - 2);
+	return blah + "]";
     }
-
-    public static void main(String[] args){
+    
+    public static void main(String[] args) {
     }
 }
