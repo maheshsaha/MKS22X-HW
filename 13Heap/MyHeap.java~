@@ -1,0 +1,35 @@
+import java.util.*;
+
+public class MyHeap{
+
+    boolean minMax = false;
+    
+    public MyHeap(){
+    }
+
+    public MyHeap(boolean minMax){
+	this = minMax;
+    }
+
+    public void add(String s){
+    }
+    
+    public String remove(){
+    }
+
+    public void peek(){
+    }
+
+    public void pushForth(){
+    }
+
+    public void pushBack(){
+    }
+    
+    public static void main(String[]args){
+    }
+
+}
+
+
+    
