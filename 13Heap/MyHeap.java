@@ -1,64 +1,77 @@
 import java.util.*;
 
 public class MyHeap{
-
-    boolean minMax; //true means max heap
     ArrayList<String> heap;
-    int min, max;
-    int current;
+    int constant;
+    int size = heap.size() - 1;
     
     public MyHeap(){
-	minMax = true;
-	heap = new ArrayList<String>()
+	constant = 1;
+	heap = new ArrayList<String>();
+	heap.add("blank");
     }
 
     public MyHeap(boolean value){
-        minMax = value;
-	heap = new ArrayList<String>()
+	heap = new ArrayList<String>();
+	heap.add("blank");
+        if (value)
+	    constant = 1;
+	else
+	    constant = -1;
+    }
+    
+    private void swap(int a, int b){
+	String temp = heap.get(a);
+	heap.set(a,heap.get(b));
+	heap.set(b,temp);
+    }
+
+    private int myCompare(String a, String b){
+	return a.compareTo(b)*constant;
     }
 
     public void add(String s){
-	int child1 = current * 2;
-	int child2 = child1 + 1;
-	if (minmax)
-	    if(max == null){
-		max = heap.get(1);
-		current = 1;
-	    else{
-		if (heap.get(child1) == null)
-		    heap.add(child1, s);
-		else if (heap.get(child2) == null){
-		    heap.add(child2, s);
-		    current += 1;
-		}
-		if (s.compareTo(max)>0)
-		    pushForth();
-		else
-		    pushBack();
-	else
-	    if(min == null)
-		min = heap.get(1);
-	    else
-		if (s.compareTo(min)<0)
-		    min = s;
-		else
-		    pushBack();
+	heap.add(s);
+	pushUp();
     }
-    
+
     public String remove(){
+	swap(1,heap.size()-1);
+	String s = heap.remove(size);
+	pushDown();
+	return s;
     }
 
     public String peek(){
+	if (size <= 0)
+	    throw new NoSuchElementException();
+	else
+	    return heap.get(size);
     }
 
-    public void pushForth(int index){
-	int child1 = index * 2;
-	int child2 = child1 + 1;
-	if(minMaX)
-	    if (heap.get(index).compareTo(heap.get(child1))
+    public void pushDown(){
+	int current = 1;
+	int newCurrent;
+	while (current < size && parentChild(current)) {
+	    if (myCompare(heap.get(current * 2), heap.get(current * 2 + 1)) >= 0)
+		newCurrent = current * 2;
+	    else
+		newCurrent = current * 2 + 1;
+	    swap(current, newCurrent);
+	    current = newCurrent;
+	}
     }
 
-    public void pushBack(int index){
+    private boolean parentChild(int a){ //checks if parent is smaller than child or not, in respect to min/max heap
+	return (myCompare(heap.get(a),heap.get(a*2)) < 0) || (myCompare(heap.get(a), heap.get(a*2 + 1)) < 0);
+    }
+	
+    public void pushUp(){
+	int current = size;
+	while (myCompare(heap.get(current), heap.get(current/2)) > 0 && current > 1){
+	    swap (current, current/2);
+	    current = current / 2;
+	}
     }
     
     public static void main(String[]args){
