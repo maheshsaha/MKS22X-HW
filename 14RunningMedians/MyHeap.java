@@ -2,19 +2,19 @@ import java.util.*;
 
 public class MyHeap{
     
-    ArrayList<String> heap;
+    ArrayList<Integer> heap;
     int constant;
     int size;
     
     public MyHeap(){
 	constant = 1;
-	heap = new ArrayList<String>();
+	heap = new ArrayList<Integer>();
 	heap.add(null);
 	size = heap.size();
     }
 
     public MyHeap(boolean value){
-	heap = new ArrayList<String>();
+	heap = new ArrayList<Integer>();
 	heap.add(null);
         if (value)
 	    constant = 1;
@@ -24,23 +24,23 @@ public class MyHeap{
     }
     
     private void swap(int a, int b){
-	String temp = heap.get(a);
+	Integer temp = heap.get(a);
 	heap.set(a,heap.get(b));
 	heap.set(b,temp);
     }
 
-    private int myCompare(String a, String b){
+    private int myCompare(Integer a, Integer b){
 	return a.compareTo(b)*constant;
     }
 
-    public void add(String s){
+    public void add(Integer s){
 	heap.add(s);
 	pushUp();
 	size ++;	
     }
 
-    public String remove(){
-	String s = heap.get(1);
+    public Integer remove(){
+	Integer s = heap.get(1);
 	// System.out.println(size);
 	// System.out.println(heap.get(size-1));
 	heap.set(1,heap.get(size-1));
@@ -49,7 +49,7 @@ public class MyHeap{
 	return s;
     }
 
-    public String peek(){
+    public Integer peek(){
 	if (size <= 0)
 	    throw new NoSuchElementException();
 	else
