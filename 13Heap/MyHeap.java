@@ -41,8 +41,6 @@ public class MyHeap{
 
     public String remove(){
 	String s = heap.get(1);
-	// System.out.println(size);
-	// System.out.println(heap.get(size-1));
 	heap.set(1,heap.get(size-1));
 	pushDown();
 	size --;
@@ -50,10 +48,10 @@ public class MyHeap{
     }
 
     public String peek(){
-	if (size <= 0)
+	if (size <= 1)
 	    throw new NoSuchElementException();
 	else
-	    return heap.get(size);
+	    return heap.get(1);
     }
 
     public void pushDown(){

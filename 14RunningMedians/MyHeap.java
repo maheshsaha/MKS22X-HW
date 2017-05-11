@@ -24,23 +24,29 @@ public class MyHeap{
     }
     
     private void swap(int a, int b){
-	Integer temp = heap.get(a);
+        int temp = heap.get(a);
 	heap.set(a,heap.get(b));
 	heap.set(b,temp);
     }
 
-    private int myCompare(Integer a, Integer b){
-	return a.compareTo(b)*constant;
+    private int myCompare(int a, int b){
+	if (a > b){
+	    return 1 * constant;
+	}
+	else if (a < b){
+	    return -1 * constant;
+	}
+	else return 0;
     }
 
-    public void add(Integer s){
+    public void add(int s){
 	heap.add(s);
 	pushUp();
 	size ++;	
     }
 
-    public Integer remove(){
-	Integer s = heap.get(1);
+    public int remove(){
+	int s = heap.get(1);
 	// System.out.println(size);
 	// System.out.println(heap.get(size-1));
 	heap.set(1,heap.get(size-1));
@@ -49,27 +55,21 @@ public class MyHeap{
 	return s;
     }
 
-    public Integer peek(){
-	if (size <= 0)
-	    throw new NoSuchElementException();
+    public int peek(){
+	if (size == 1)
+	    throw new NoSuchElementException("empty heap");
 	else
-	    return heap.get(size);
+	    return heap.get(1);
     }
 
     public void pushDown(){
 	int current = 1;
 	int newCurrent;
-	// System.out.print("pushDown call: ");
-	// System.out.println(heap);
 	while ((current*2 + 1 <= size-1) && parentChild(current)) {
-	    // System.out.println(heap.get(current*2));
-	    // System.out.println(heap.get(current*2+1));
-	    // System.out.println(current);
 	    if (myCompare(heap.get(current * 2), heap.get(current * 2 + 1)) >= 0)
 		newCurrent = current * 2;
 	    else
 		newCurrent = current * 2 + 1;
-	    // System.out.println(newCurrent);
 	    swap(current, newCurrent);
 	    current = newCurrent;
 	}
@@ -86,13 +86,13 @@ public class MyHeap{
 	    current = current / 2;
 	}
     }
-    public String toString(){
-        String s = "[";
-        for (int i = 0; i < size; i++) {
-            s += heap.get(i) + ", ";
-        }
-	return s.substring(0, s.length() - 2) + "]";
-    }
+    // public String toString(){
+    //     String s = "[";
+    //     for (int i = 0; i < size; i++) {
+    //         s += heap.get(i) + ", ";
+    //     }
+    // 	return s.substring(0, s.length() - 2) + "]";
+    // }
     
     public static void main(String[] args){
     }
