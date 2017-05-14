@@ -2,17 +2,14 @@ public class RunningMedian{
 
     MyHeap max;
     MyHeap min;
-
-    int maxSize;
-    int minSize;
     
     public RunningMedian(){
-	max = new MyHeap(true);
-	min = new MyHeap(false);
+        min = new MyHeap(true);
+	max = new MyHeap(false);
     }
 
     public void add(int a){
-    	if (max.size == 1 && min.size == 1)
+    	if (max.size == 0 && min.size == 0)
 	    min.add(a);
         else if (a < getMedian())
     	    min.add(a);
@@ -34,3 +31,4 @@ public class RunningMedian{
 	    return 1.0 * min.peek();
     }
 }
+
