@@ -10,7 +10,6 @@ public class MyHeap{
 	constant = 1;
 	heap = new ArrayList<String>();
 	heap.add(null);
-	size = heap.size();
     }
 
     public MyHeap(boolean value){
@@ -20,7 +19,6 @@ public class MyHeap{
 	    constant = 1;
 	else
 	    constant = -1;
-	size = heap.size();
     }
     
     private void swap(int a, int b){
@@ -35,20 +33,21 @@ public class MyHeap{
 
     public void add(String s){
 	heap.add(s);
+	size ++;
 	pushUp();
-	size ++;	
+	pushDown();
     }
 
     public String remove(){
-	String s = heap.get(1);
-	heap.set(1,heap.get(size-1));
-	pushDown();
+	String s = heap.set(1,heap.remove(size));
 	size --;
+	pushDown();
+	pushUp();
 	return s;
     }
 
     public String peek(){
-	if (size <= 1)
+	if (size < 1)
 	    throw new NoSuchElementException();
 	else
 	    return heap.get(1);
@@ -57,17 +56,11 @@ public class MyHeap{
     public void pushDown(){
 	int current = 1;
 	int newCurrent;
-	// System.out.print("pushDown call: ");
-	// System.out.println(heap);
-	while ((current*2 + 1 <= size-1) && parentChild(current)) {
-	    // System.out.println(heap.get(current*2));
-	    // System.out.println(heap.get(current*2+1));
-	    // System.out.println(current);
+	while ((current*2 + 1 <= size) && parentChild(current)) {
 	    if (myCompare(heap.get(current * 2), heap.get(current * 2 + 1)) >= 0)
 		newCurrent = current * 2;
 	    else
 		newCurrent = current * 2 + 1;
-	    // System.out.println(newCurrent);
 	    swap(current, newCurrent);
 	    current = newCurrent;
 	}
