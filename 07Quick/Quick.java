@@ -59,6 +59,8 @@ public class Quick {
     }
     
     public static void quicksort(int[]data){
+	if(data.length == 0)
+	    return;
     	quicksortH(data, 0, data.length - 1);
     }
 
