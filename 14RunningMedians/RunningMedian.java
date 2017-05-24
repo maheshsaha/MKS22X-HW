@@ -30,5 +30,8 @@ public class RunningMedian{
 	else
 	    return 1.0 * min.peek();
     }
+    public static void main(String[] args){
+    }
+
 }
 

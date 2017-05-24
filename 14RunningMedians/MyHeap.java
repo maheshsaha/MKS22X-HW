@@ -85,15 +85,14 @@ public class MyHeap{
     	}
     }
 
-    public String toString(){
-        String s = "[";
-        for (int i = 0; i < size; i++) {
-            s += heap.get(i) + ", ";
-        }
-	return s.substring(0, s.length() - 2) + "]";
-    }
+    // public String toString(){
+    //     String s = "[";
+    //     for (int i = 0; i < size; i++) {
+    //         s += heap.get(i) + ", ";
+    //     }
+    // 	return s.substring(0, s.length() - 2) + "]";
+    // }
     
-      
     public static void main(String[] args){
 
     }

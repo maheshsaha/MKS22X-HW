@@ -19,7 +19,7 @@ public class Driver{
 	int Ws=0;
 	RunningMedian test= new RunningMedian();
 	String ans= "";
-        for(int i=0; i<1000000; i++){
+        for(int i=0; i<1000; i++){
 	    int a=(i*(int)(Math.random()*10));//random
 	    list.add(a);
 	    test.add(a);
