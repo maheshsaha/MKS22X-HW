@@ -39,28 +39,12 @@ public class Location implements Comparable<Location>{
     public boolean getStar(){
 	return aStar;
     }
-
-    public int getPrevRow() {
-        return previous.getRow();
-    }
-
-    public int getPrevCol() {
-        return previous.getCol();
-    }
-
-    public boolean hasPrev() {
-        return previous != null;
-    }
     
     public int compareTo(Location other){
-	int x = getGoalDist();
-	int y = other.getGoalDist();
-	if (aStar){
-	    x += getStartDist();
-	    y += other.getStartDist();
-	}
-	return x -  y;
+	if(aStar)
+	    return (distanceToStart + distanceToGoal) - (other.getStartDist() + other.getGoalDist());
+	else
+	    return distanceToGoal - other.getGoalDist();
     }
-
 }
 
