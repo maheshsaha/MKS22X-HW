@@ -20,6 +20,10 @@ public class MyHeap{
 	else
 	    constant = -1;
     }
+
+    public int size(){
+	return size;
+    }
     
     private void swap(int a, int b){
 	Location temp = heap.get(a);
@@ -27,15 +31,6 @@ public class MyHeap{
 	heap.set(b,temp);
     }
 
-    private int myCompare(int a, int b){
-	if (a > b){
-	    return 1 * constant;
-	}
-	else if (a < b){
-	    return -1 * constant;
-	}
-	else return 0;
-    }
 
     public void add(Location s){
 	heap.add(s);
@@ -46,11 +41,19 @@ public class MyHeap{
     }
 
     public Location remove(){
-        Location s = heap.set(1,heap.remove(size));
-	size --;
-	pushDown();
-	pushUp();
-	return s;
+	if(heap.size() > 2){
+	    Location s = heap.set(1,heap.remove(size));
+	    size --;
+	    pushDown();
+	    pushUp();
+	    return s;
+	}
+	else{
+	    Location s = heap.remove(size);
+	    size --;
+	    return s;
+	}
+	//return s;
     }
 
     public Location peek(){

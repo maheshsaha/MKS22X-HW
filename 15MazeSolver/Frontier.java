@@ -1,4 +1,4 @@
-public inteface Frontier {
+public interface Frontier {
         
     public void add (Location x);
     public int size();

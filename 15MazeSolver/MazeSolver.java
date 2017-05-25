@@ -1,9 +1,11 @@
-import java.util.*;
+import java.util.*; // i finally get this aftr learning it from jwu
 
 public class MazeSolver{
 
     private Maze board;
     private boolean animate;
+    private boolean aStar;
+    private Frontier f;
     
     public MazeSolver(String filename){
 	this(filename, false);
@@ -19,13 +21,10 @@ public class MazeSolver{
     }
 
     public void solve(){
-	sovle(1);
+	solve(1);
     }
 
     public void solve(int style){
-	boolean aStar = false;
-	Frontier f;
-	
 	if (style == 0)
 	    f = new FrontierStack();
 	if (style == 1)
@@ -36,17 +35,68 @@ public class MazeSolver{
 	    f = new FrontierPriorityQueue(); //astar
 	    aStar = true;
 	}
-	else{
-	    System.out.println("Invalid input");
-	    System.exit();
-	}
 	f.add(board.getStart());
 	
-	location x;
-	while(f.size() > 0){
-	    x = 
+	Location x;
+	while(f.size()>0){
+	    x = f.next();
+	    board.set(x.getRow(),x.getCol(),'.');
+	    if(distToGoal(x.getRow(),x.getCol())==0){
+		while(x.getPrev() != null){
+		    x = x.getPrev();
+		    board.set(x.getRow(),x.getCol(),'@');
+		}
+		return;
+	    }
+	    for(Location l : getNeighbors(x)){
+		if(l != null){
+		    f.add(l);
+		    board.set(l.getRow(),l.getCol(),'?');
+		}
+	    }
+	    System.out.println(board.toString(100));
+	}
     }
 
-    public toString(){
+    public ArrayList<Location> getNeighbors(Location l){
+	ArrayList<Location> locations = new ArrayList<Location>();
+	int r = l.getRow();
+	int c = l.getCol();
+	if(r + 1 < board.getMRow() && board.get(r + 1, c) == ' ')
+	    locations.add(new Location(r + 1, c, l, distToStart(r + 1, c), distToGoal(r + 1, c), aStar));
+	if(r - 1 >= 0 && board.get(r - 1,c) == ' ')
+	    locations.add(new Location(r - 1, c, l, distToStart(r - 1, c), distToGoal(r - 1, c), aStar));
+	if(c + 1 < board.getMCol() && board.get(r, c + 1) == ' ')
+	    locations.add(new Location(r, c + 1, l, distToStart(r, c + 1), distToGoal(r, c + 1), aStar));
+	if(c - 1 >= 0 && board.get(r, c - 1) == ' ')
+	    locations.add(new Location(r, c - 1, l, distToStart(r, c - 1), distToGoal(r, c - 1), aStar));
+	return locations;
+    }
+
+    public int distToStart(int x, int y){
+	return Math.abs(board.getStart().getRow() - x) + Math.abs(board.getStart().getCol() - y);
+    }
+
+    public int distToGoal(int x, int y){
+	return Math.abs(board.getEnd().getRow() - x) + Math.abs(board.getEnd().getCol() - y);
+    }
+    
+    public String toString(){
+	return board.toString();
+    }
+
+    public static void main(String[]args){
+	// MazeSolver x = new MazeSolver("data2.txt");
+	// x.solve(0);
+	// System.out.println(x);
+
+	// x.solve(1);
+	// System.out.println(x);
+	
+	// x.solve(2);
+	// System.out.println(x);
+
+	// x.solve(3);
+	// System.out.println(x);
     }
 }
